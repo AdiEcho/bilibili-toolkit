@@ -3,7 +3,6 @@
 # @Time    : 2019/9/21 00:16
 # @Author  : Dawnnnnnn
 # @Contact: 1050596704@qq.com
-import asyncio
 from apis import *
 
 
@@ -143,6 +142,14 @@ async def wear_medal_run(medal, cookie, suname):
     await wear_medal(medal, cookie, suname)
 
 
+async def delete_medal_run(medal_id, cookie, csrf, suname):
+    await delete_medal(medal_id, cookie, csrf, suname)
+
+
+async def get_all_medal_run(cookie, suname):
+    await get_all_medal(cookie, suname)
+
+
 async def act_id_lottery_run(act_id, get_chance, sleep, cookie, suname):
     for i in range(0, get_chance):
         await act_id_get_chance(act_id, cookie, suname)
@@ -162,3 +169,16 @@ async def comment_send_run(oid, otype, message, cookie, csrf, suname):
 
 async def comment_reply_run(oid, otype, message, root, parent, cookie, csrf, suname):
     await comment_reply(oid, otype, root, parent, message, cookie, csrf, suname)
+
+
+async def new_year_lottery_run(cookie, csrf, suname):
+    await new_year_lottery(cookie, csrf, suname)
+
+
+async def video_like_run(aid, cookie, csrf, suname):
+    await video_like(aid, cookie, csrf, suname)
+
+
+async def video_dislike_run(aid, cookie, csrf, suname):
+    await video_dislike(aid, cookie, csrf, suname)
+

@@ -3,10 +3,12 @@
 # @Time    : 2019/9/16 22:17
 # @Author  : Dawnnnnnn
 # @Contact: 1050596704@qq.com
-import re
 import os
-import toml
+import re
+
 import aiohttp
+import toml
+
 from functions import *
 from login import BiliLogin
 
@@ -77,7 +79,7 @@ class Main:
             await check_account_state_run(uid, cookie, uname)
         if config['destory_account']['enable']:
             printer.printer("危险操作，自己写await", "DEBUG", "yellow")
-            #await destory_account_run(uid, access_token, cookie, csrf, uname)
+            # await destory_account_run(uid, access_token, cookie, csrf, uname)
         if config['make_fake_userinfo']['enable']:
             await make_fake_info_run(uid, cookie, csrf, uname)
         if config['level_task']['enable']:
@@ -99,6 +101,11 @@ class Main:
         if config['wear_medal']['enable']:
             medal_id = config['wear_medal']['medal_id']
             await wear_medal_run(medal_id, cookie, uname)
+        if config['delete_medal']['enable']:
+            medal_id = config['delete_medal']['medal_id']
+            await delete_medal(medal_id, cookie, csrf, uname)
+        if config['get_all_medal']['enable']:
+            await get_all_medal(cookie, uname)
         if config['send_danmu']['enable']:
             msg = config['send_danmu']['msg']
             roomid = config['send_danmu']['roomid']
@@ -134,6 +141,19 @@ class Main:
             get_chance = int(config['act_id_lottery']['get_chance'])
             sleep = int(config['act_id_lottery']['sleep'])
             await act_id_lottery_run(act_id, get_chance, sleep, cookie, uname)
+        if config['new_year_lottery']['enable']:
+            await new_year_lottery(cookie, csrf, uname)
+        if config['video_like']['enable']:
+            aid = config['video_like']['aid']
+            sleep = int(config['video_like']['sleep'])
+            await asyncio.sleep(random.randint(2, 15))
+            await video_like_run(aid, cookie, csrf, uname)
+        if config['video_dislike']['enable']:
+            aid = config['video_dislike']['aid']
+            sleep = int(config['video_dislike']['sleep'])
+            await asyncio.sleep(random.randint(2, 15))
+            await video_dislike_run(aid, cookie, csrf, uname)
+
         if config['comment_send']['enable']:
             if len(self.msgs) > 0:
                 message = self.msgs.pop()

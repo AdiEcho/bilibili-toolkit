@@ -1,6 +1,6 @@
 # 获取用户信息
 [get_user_info]
-enable = true # 开关
+enable = false # 开关
 
 # 清空账号资产/信息
 [destory_account]
@@ -26,7 +26,7 @@ enable = false
 # 关注
 [follow]
 enable = false
-uid_list = [1,2,3,4,5]
+uid_list = [5212665]
 
 # 清空没关注自己的up
 [clean_not_follow_up]
@@ -39,7 +39,16 @@ enable = false
 # 佩戴勋章
 [wear_medal]
 enable = false
-medal_id = 5432
+medal_id = 10361
+
+# 删除勋章
+[delete_medal]
+enable = false
+medal_id = 29245
+
+# 显示所有勋章
+[get_all_medal]
+enable = false
 
 # 发送弹幕
 [send_danmu]
@@ -110,3 +119,18 @@ act_id = 247
 get_chance = 1
 sleep = 0.1
 
+# 新年抽奖
+[new_year_lottery]
+enable = false
+
+# 视频点赞
+[video_like]
+enable = false
+aid = 87051634
+sleep = 3000
+
+# 视频取消点赞
+[video_dislike]
+enable = true
+aid = 87051634
+sleep = 5000

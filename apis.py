@@ -5,10 +5,12 @@
 # @Contact: 1050596704@qq.com
 import json
 import random
-from utils import *
-from PIL import Image
 from io import BytesIO
+
+from PIL import Image
+
 from network import Request
+from utils import *
 
 request = Request()
 
@@ -30,23 +32,6 @@ async def delete_follow(follow_uid, cookie, csrf, suname):
     response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
     response = json.loads(response)
     printer.printer(f"取消关注{follow_uid}回显:{response}", "INFO", "blue")
-
-
-# 根据勋章id删除勋章
-async def delete_medal(medal_id, cookie, csrf, suname):
-    url = "https://api.live.bilibili.com/i/ajaxDeleteMyFansMedal"
-    data = {
-        "medal_id": medal_id,
-        "csrf_token": csrf,
-        "csrf": csrf
-    }
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36",
-        "Cookie": cookie
-    }
-    response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
-    response = json.loads(response)
-    printer.printer(f"删除勋章{medal_id}回显:{response}", "INFO", "blue")
 
 
 # 根据粉丝uid删除粉丝
@@ -763,6 +748,23 @@ async def wear_medal(medal, cookie, suname):
     printer.printer(f"佩戴勋章{medal}回显:{response}", "INFO", "blue")
 
 
+# 根据勋章id删除勋章
+async def delete_medal(medal_id, cookie, csrf, suname):
+    url = "https://api.live.bilibili.com/i/ajaxDeleteMyFansMedal"
+    data = {
+        "medal_id": medal_id,
+        "csrf_token": csrf,
+        "csrf": csrf
+    }
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36",
+        "Cookie": cookie
+    }
+    response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"删除勋章{medal_id}回显:{response}", "INFO", "blue")
+
+
 # 更新签名，出生年月，性别信息
 async def update_info(uname, cookie, csrf, suname):
     url = "https://api.bilibili.com/x/member/web/update"
@@ -873,6 +875,42 @@ async def query_system_notice(cookie, suname):
     return response
 
 
+# 视频点赞
+async def video_like(aid, cookie, csrf, suname):
+    url = "https://api.bilibili.com/x/web-interface/archive/like"
+    data = {
+        'aid': aid,
+        'like': 1,
+        'csrf': csrf,
+    }
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "Cookie": cookie
+    }
+    response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"视频点赞回显:{response}", "INFO", "blue")
+    return response
+
+
+# 视频取消点赞
+async def video_dislike(aid, cookie, csrf, suname):
+    url = "https://api.bilibili.com/x/web-interface/archive/like"
+    data = {
+        'aid': aid,
+        'like': 2,
+        'csrf': csrf,
+    }
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "Cookie": cookie
+    }
+    response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"视频取消点赞回显:{response}", "INFO", "blue")
+    return response
+
+
 # 给评论点赞
 async def comment_like(oid, otype, rpid, cookie, csrf, suname):
     url = "https://api.bilibili.com/x/v2/reply/action"
@@ -972,6 +1010,28 @@ async def act_id_lottery(act_id, cookie, suname):
     return response
 
 
+# 新年限定抽奖
+async def new_year_lottery(cookie, csrf, suname):
+    url = 'https://api.live.bilibili.com/xlive/web-ucenter/v1/capsule/open_capsule_by_id'
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "Cookie": cookie
+    }
+    data = {
+        "id": "50",
+        "count": "10",
+        "platform": "web",
+        "_": CurrentTime(),
+        "csrf_token": csrf,
+        "csrf": csrf,
+        "visit_id": "3hqkuxqsaxo0"
+    }
+    response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"{suname}抽奖回显:{response}", "INFO", "blue")
+    return response
+
+
 # 通过act_id进行获取抽奖次数
 async def act_id_get_chance(act_id, cookie, suname):
     url = f"https://www.bilibili.com/matsuri/add/lottery/times?act_id={act_id}"
@@ -996,3 +1056,5 @@ async def act_id_check_chance(act_id, cookie, suname):
     response = json.loads(response)
     printer.printer(f"{suname}查询{act_id}抽奖机会回显:{response}", "INFO", "blue")
     return response
+
+

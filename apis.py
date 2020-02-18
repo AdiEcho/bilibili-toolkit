@@ -1010,28 +1010,6 @@ async def act_id_lottery(act_id, cookie, suname):
     return response
 
 
-# 新年限定抽奖
-async def new_year_lottery(cookie, csrf, suname):
-    url = 'https://api.live.bilibili.com/xlive/web-ucenter/v1/capsule/open_capsule_by_id'
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
-        "Cookie": cookie
-    }
-    data = {
-        "id": "50",
-        "count": "10",
-        "platform": "web",
-        "_": CurrentTime(),
-        "csrf_token": csrf,
-        "csrf": csrf,
-        "visit_id": "3hqkuxqsaxo0"
-    }
-    response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
-    response = json.loads(response)
-    printer.printer(f"{suname}抽奖回显:{response}", "INFO", "blue")
-    return response
-
-
 # 通过act_id进行获取抽奖次数
 async def act_id_get_chance(act_id, cookie, suname):
     url = f"https://www.bilibili.com/matsuri/add/lottery/times?act_id={act_id}"
@@ -1056,5 +1034,147 @@ async def act_id_check_chance(act_id, cookie, suname):
     response = json.loads(response)
     printer.printer(f"{suname}查询{act_id}抽奖机会回显:{response}", "INFO", "blue")
     return response
+
+
+# 视频播放
+async def watch_video(aid, uid, cookie, csrf, suname):
+    url = 'https://api.bilibili.com/x/click-interface/web/heartbeat'
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "Referer": f"https://www.bilibili.com/video/av{aid}",
+        "Cookie": cookie
+    }
+    cid = await get_av_cid(aid, cookie, suname)
+    data = {
+        "aid": aid,
+        "cid": cid,
+        "mid": uid,
+        "csrf": csrf,
+        "played_time": "0",
+        "realtime": "0",
+        "start_ts": CurrentTime(),
+        "type": "3",
+        "dt": "2",
+        "play_type": "1"
+    }
+    response = await request.req_add_job('post', url, headers=headers, data=data, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"观看视频{aid}回显:{response}", "INFO", "blue")
+
+
+# 视频播放心跳
+async def watch_video_heartbeat(aid, uid, cookie, csrf, suname):
+    url = 'https://api.bilibili.com/x/click-interface/web/heartbeat'
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "Referer": f"https://www.bilibili.com/video/av{aid}",
+        "Cookie": cookie
+    }
+    cid = await get_av_cid(aid, cookie, suname)
+    data = {
+        "aid": aid,
+        "cid": cid,
+        "mid": uid,
+        "csrf": csrf,
+        "played_time": "0",
+        "realtime": "0",
+        "start_ts": CurrentTime(),
+        "type": "3",
+        "dt": "2",
+        "play_type": "0"
+    }
+    response = await request.req_add_job('post', url, headers=headers, data=data, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"观看视频{aid}回显:{response}", "INFO", "blue")
+
+
+# 6号直播间签到
+async def SixSign(cookie, csrf, suname):
+    url = 'https://api.live.bilibili.com/xlive/general-interface/v1/lpl-task/MatchSign'
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "Cookie": cookie
+    }
+    data = {
+        'room_id': '7734200',
+        'game_type': 25,
+        'csrf_token': csrf,
+        'csrf': csrf,
+        'visit_id': '4sb6nhezljw0'
+    }
+    response = await request.req_add_job('post', url, headers=headers, data=data, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"签到回显:{response}", "INFO", "blue")
+
+
+# 6号直播间转发
+async def SixShare(cookie, csrf, suname):
+    url = 'https://api.live.bilibili.com/xlive/general-interface/v1/lpl-task/MatchShare'
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "Cookie": cookie
+    }
+    data = {
+        'game_type': 25,
+        'csrf_token': csrf,
+        'csrf': csrf,
+        'visit_id': '4sb6nhezljw0'
+    }
+    response = await request.req_add_job('post', url, headers=headers, data=data, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"分享回显:{response}", "INFO", "blue")
+
+
+# 漫画签到
+async def MangaSign(cookie, suname):
+    url = 'https://manga.bilibili.com/twirp/activity.v3.Activity/YuanxiaoSign?device=h5&platform=web'
+    headers = {
+        'Host': 'manga.bilibili.com',
+        'Connection': 'keep-alive',
+        'Accept': 'application/json, text/plain, */*',
+        'Origin': 'https://www.bilibili.com',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 5.1.1; MI 6 Build/OPM1.171019.012) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 BiliComic/21210000 mobi_app/android_comic channel/pc_bilicomic Buvid/XZ66D6E6CB96A9E5D66991096C1D5F139A96D internal_version/21210000',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Referer': 'https://www.bilibili.com/blackboard/activity-Vs7TlI6g.html?jumpFrom=com.bilibili.comic.bilicomic.home.view.fragment.HomeSubRecommendFragment&from=sybanner',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-CN,en-US;q=0.8',
+        'Cookie': cookie,
+        'X-Requested-With': 'com.bilibili.comic'
+    }
+    option_headers = {
+        'Host': 'manga.bilibili.com',
+        'Access-Control-Request-Method': 'POST',
+        'Origin': 'https://www.bilibili.com',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 5.1.1; MI 6 Build/OPM1.171019.012) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 BiliComic/21210000 mobi_app/android_comic channel/pc_bilicomic Buvid/XZ66D6E6CB96A9E5D66991096C1D5F139A96D internal_version/21210000',
+        'Access-Control-Request-Headers': 'content-type',
+        'Referer': 'https://www.bilibili.com/blackboard/activity-Vs7TlI6g.html?jumpFrom=com.bilibili.comic.bilicomic.home.view.fragment.HomeSubRecommendFragment&from=sybanner',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'Accept-Language',
+        'X-Requested-With': 'com.bilibili.comic'
+    }
+    data = {}
+    option_response = await request.req_add_job('options', url, headers=option_headers, suname=suname)
+    response = await request.req_add_job('post', url, headers=headers, data=data, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"漫画签到回显:{response}", "INFO", "blue")
+
+
+async def tianxuan(cookie, csrf, suname):
+    url = 'https://api.live.bilibili.com/xlive/lottery-interface/v1/Anchor/Join'
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        'Content-Length': '124',
+        "Cookie": cookie
+    }
+    data = {
+        'id': '97287',
+        'platform': 'pc',
+        'csrf_token': csrf,
+        'csrf': csrf,
+        'visit_id': '9ey16l5psw00'
+    }
+    response = await request.req_add_job('post', url, headers=headers, data=data, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"参加天选回显:{response}", "INFO", "blue")
 
 

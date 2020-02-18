@@ -3,12 +3,14 @@
 # @Time    : 2019/9/17 23:06
 # @Author  : Dawnnnnnn
 # @Contact: 1050596704@qq.com
-import traceback
-import aiohttp
 import asyncio
 import time
-from printer import Printer
+import traceback
 from uuid import uuid4
+
+import aiohttp
+
+from printer import Printer
 
 printer = Printer()
 
@@ -103,7 +105,7 @@ class Request:
     async def req_result(self, verify_token):
         while True:
             # 理论数据 后期根据实际情况微调
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.05)
             try:
                 if verify_token not in self.req_done_dict.keys():
                     continue
@@ -119,12 +121,15 @@ class Request:
         while True:
             try:
                 # 理论数据 不排除其他协程调度的消耗 可能会堵塞
+                # 在此修改每个任务之间的间隔时间
+                # await asyncio.sleep(0.6)
                 await asyncio.sleep(1 / self.req_alive_num)
                 # 退出当前协程
                 if int(time.time()) - is_alive_time > self.req_timeout_max:
                     printer.printer("最大超时时间内没有请求处理,请求协程退出!", "Finished", "green")
                     return
                 if self.req_work_list:
+                    # await asyncio.sleep(3)
                     is_alive_time = int(time.time())
                     req_pack = self.req_work_list.pop(0)
                     target = req_pack['func']

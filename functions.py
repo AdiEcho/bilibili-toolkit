@@ -8,13 +8,13 @@ from apis import *
 
 async def check_account_state_run(uid, cookie, suname):
     response_1 = await userinfo_1(uid, cookie, suname)
-    printer.printer(response_1,"DEBUG","yellow")
+    printer.printer(response_1, "DEBUG", "yellow")
     response_2 = await userinfo_2(cookie, suname)
-    printer.printer(response_2,"DEBUG","yellow")
+    printer.printer(response_2, "DEBUG", "yellow")
     # response_3 = await userinfo_3(cookie, suname)
     # printer.printer(response_3,"DEBUG","yellow")
     response_4 = await userinfo_4(cookie, suname)
-    printer.printer(response_4,"DEBUG","yellow")
+    printer.printer(response_4, "DEBUG", "yellow")
     printer.printer(
         f"({response_1['data']['name']} {uid}) 封禁状态:{response_1['data']['silence']} 用户类型:{response_2['data']['userStatus']} 主站等级:{response_2['data']['level_info']['current_level']}({response_2['data']['level_info']['current_exp']}/{response_2['data']['level_info']['next_exp']}) 硬币:{response_2['data']['coins']} 直播站等级:{response_4['data']['user_level']}({response_4['data']['user_intimacy']}/{response_4['data']['user_next_intimacy']}) 银瓜子:{response_4['data']['silver']}",
         "INFO", "blue")
@@ -29,6 +29,10 @@ async def clean_not_follow_fan_run(uid, cookie, csrf, suname):
     for k in range(0, len(response['data']['list'])):
         if response['data']['list'][k]['attribute'] != 6:
             await delete_fans(response['data']['list'][k]['mid'], cookie, csrf, suname)
+
+
+async def delete_fans_run(fan_uid, cookie, csrf, suname):
+    await delete_fans(fan_uid, cookie, csrf, suname)
 
 
 async def clean_not_follow_up_run(uid, cookie, csrf, suname):
@@ -116,6 +120,15 @@ async def make_fake_info_run(uid, cookie, csrf, suname):
         random_num = random.randint(1, 20)
         if random_num > 10:
             await follow(response['data'][i]['uid'], cookie, csrf, suname)
+# 随机关注
+
+
+async def random_follow_run(uid, cookie, csrf, suname):
+    response = await get_follow_uid_list(suname)
+    for i in range(0, len(response['data'])):
+        random_num = random.randint(1, 20)
+        if random_num > 10:
+            await follow(response['data'][i]['uid'], cookie, csrf, suname)
 
 
 async def query_live_reward_run(access_key, suname):
@@ -171,10 +184,6 @@ async def comment_reply_run(oid, otype, message, root, parent, cookie, csrf, sun
     await comment_reply(oid, otype, root, parent, message, cookie, csrf, suname)
 
 
-async def new_year_lottery_run(cookie, csrf, suname):
-    await new_year_lottery(cookie, csrf, suname)
-
-
 async def video_like_run(aid, cookie, csrf, suname):
     await video_like(aid, cookie, csrf, suname)
 
@@ -182,3 +191,29 @@ async def video_like_run(aid, cookie, csrf, suname):
 async def video_dislike_run(aid, cookie, csrf, suname):
     await video_dislike(aid, cookie, csrf, suname)
 
+
+async def watch_video_run(aid, uid, cookie, csrf, suname):
+    await watch_video(aid, uid, cookie, csrf, suname)
+
+
+async def watch_video_heartbeat_run(aid, uid, cookie, csrf, suname):
+    i = 0
+    while True:
+        await watch_video_heartbeat(aid, uid, cookie, csrf, suname)
+        await asyncio.sleep(15)
+        i += 1
+        if i == 100:
+            break
+
+
+async def Six_run(cookie, csrf, suname):
+    await SixSign(cookie, csrf, suname)
+    await SixShare(cookie, csrf, suname)
+
+
+async def MangaSign_run(cookie, suname):
+    await MangaSign(cookie, suname)
+
+
+async def tianxuan_run(cookie, csrf, suname):
+    await tianxuan(cookie, csrf, suname)

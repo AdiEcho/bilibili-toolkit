@@ -82,6 +82,8 @@ class Main:
             # await destory_account_run(uid, access_token, cookie, csrf, uname)
         if config['make_fake_userinfo']['enable']:
             await make_fake_info_run(uid, cookie, csrf, uname)
+        if config['random_follow']['enable']:
+            await random_follow_run(uid, cookie, csrf, suname)
         if config['level_task']['enable']:
             await level_task_run(uid, access_token, cookie, csrf, uname)
         if config['combo']['enable']:
@@ -141,18 +143,27 @@ class Main:
             get_chance = int(config['act_id_lottery']['get_chance'])
             sleep = int(config['act_id_lottery']['sleep'])
             await act_id_lottery_run(act_id, get_chance, sleep, cookie, uname)
-        if config['new_year_lottery']['enable']:
-            await new_year_lottery(cookie, csrf, uname)
         if config['video_like']['enable']:
             aid = config['video_like']['aid']
-            sleep = int(config['video_like']['sleep'])
-            await asyncio.sleep(random.randint(2, 15))
             await video_like_run(aid, cookie, csrf, uname)
         if config['video_dislike']['enable']:
             aid = config['video_dislike']['aid']
-            sleep = int(config['video_dislike']['sleep'])
-            await asyncio.sleep(random.randint(2, 15))
             await video_dislike_run(aid, cookie, csrf, uname)
+        if config['watch_video']['enable']:
+            aid = config['watch_video']['aid']
+            await watch_video_run(aid, uid, cookie, csrf, uname)
+        if config['watch_video_heartbeat']['enable']:
+            aid = config['watch_video_heartbeat']['aid']
+            await watch_video_heartbeat_run(aid, uid, cookie, csrf, uname)
+        if config['Six']['enable']:
+            await Six_run(cookie, csrf, uname)
+        if config['MangaSign']['enable']:
+            await MangaSign_run(cookie, uname)
+        if config['delete_fans']['enable']:
+            fan_uid = config['delete_fans']['fan_uid']
+            await delete_fans_run(fan_uid, cookie, csrf, uname)
+        if config['tianxuan']['enable']:
+            await tianxuan_run(cookie, csrf, uname)
 
         if config['comment_send']['enable']:
             if len(self.msgs) > 0:

@@ -10,6 +10,10 @@ enable = false
 [make_fake_userinfo]
 enable = false
 
+# 随机关注
+[random_follow]
+enable = false
+
 # 每日任务(观看/分享/登陆)
 [level_task]
 enable = false
@@ -26,7 +30,7 @@ enable = false
 # 关注
 [follow]
 enable = false
-uid_list = [5212665]
+uid_list = [60666791]
 
 # 清空没关注自己的up
 [clean_not_follow_up]
@@ -119,18 +123,40 @@ act_id = 247
 get_chance = 1
 sleep = 0.1
 
-# 新年抽奖
-[new_year_lottery]
-enable = false
-
 # 视频点赞
 [video_like]
 enable = false
-aid = 87051634
-sleep = 3000
+aid = 85794878
 
 # 视频取消点赞
 [video_dislike]
-enable = true
+enable = false
 aid = 87051634
-sleep = 5000
+
+# 视频播放
+[watch_video]
+enable = false
+aid = 85794878
+
+# 视频播放心跳
+[watch_video_heartbeat]
+enable = true
+aid = 85794878
+
+# 6号直播间签到分享
+[Six]
+enable = true
+
+# 漫画测试
+[MangaSign]
+enable = false
+
+# 删除粉丝
+[delete_fans]
+enable = false
+fan_uid = 198833019
+
+# 天选
+[tianxuan]
+enable = false
+

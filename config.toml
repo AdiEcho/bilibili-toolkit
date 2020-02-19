@@ -29,8 +29,8 @@ enable = false
 
 # 关注
 [follow]
-enable = false
-uid_list = [60666791]
+enable = true
+uid_list = [5212665]
 
 # 清空没关注自己的up
 [clean_not_follow_up]
@@ -140,7 +140,7 @@ aid = 85794878
 
 # 视频播放心跳
 [watch_video_heartbeat]
-enable = true
+enable = false
 aid = 85794878
 
 # 6号直播间签到分享

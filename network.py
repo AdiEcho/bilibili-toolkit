@@ -4,6 +4,7 @@
 # @Author  : Dawnnnnnn
 # @Contact: 1050596704@qq.com
 import asyncio
+import random
 import time
 import traceback
 from uuid import uuid4
@@ -22,7 +23,7 @@ def generate_verify_token():
 
 class Request:
     def __init__(self):
-        self.proxy_api = "8.8.8.8"
+        self.proxy_api = "http://gec.ip3366.net/api/?key=20190728141000080&getnum=100&proxytype=0"
         # 全局session
         self.ssion = {}
         # 工作队列
@@ -121,7 +122,6 @@ class Request:
         while True:
             try:
                 # 理论数据 不排除其他协程调度的消耗 可能会堵塞
-                # 在此修改每个任务之间的间隔时间
                 # await asyncio.sleep(0.6)
                 await asyncio.sleep(1 / self.req_alive_num)
                 # 退出当前协程
@@ -129,7 +129,8 @@ class Request:
                     printer.printer("最大超时时间内没有请求处理,请求协程退出!", "Finished", "green")
                     return
                 if self.req_work_list:
-                    # await asyncio.sleep(3)
+                    # 在此修改每个任务之间的间隔时间
+                    await asyncio.sleep(random.randint(1, 15))
                     is_alive_time = int(time.time())
                     req_pack = self.req_work_list.pop(0)
                     target = req_pack['func']
@@ -140,3 +141,4 @@ class Request:
 
             except Exception as e:
                 printer.printer(f"req_loop {e}", "Error", "red")
+

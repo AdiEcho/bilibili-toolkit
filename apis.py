@@ -15,6 +15,17 @@ from utils import *
 request = Request()
 
 
+# 测试ip
+async def test_ip(suname):
+    url = 'http://icanhazip.com/'
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36",
+    }
+    response = await request.req_add_job('get', url, headers=headers, suname=suname)
+    response = response.text()
+    printer.printer(f"{response}", 'INFO', 'blue')
+
+
 # 取消关注 (直播站接口)
 async def delete_follow(follow_uid, cookie, csrf, suname):
     url = "https://api.live.bilibili.com/liveact/attention"
@@ -277,7 +288,7 @@ async def follow(follow_uid, cookie, csrf, suname):
     }
     response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
     response = json.loads(response)
-    printer.printer(f"关注{follow_uid}回显:{response}", "INFO", "blue")
+    printer.printer(f"关注{follow_uid}回显:{response}", "INFO", "cyan")
 
 
 # 取消关注 (主站接口)
@@ -1177,4 +1188,40 @@ async def tianxuan(cookie, csrf, suname):
     response = json.loads(response)
     printer.printer(f"参加天选回显:{response}", "INFO", "blue")
 
+
+# 76号直播间签到
+async def OWSign(cookie, csrf, suname):
+    url = 'https://api.live.bilibili.com/xlive/general-interface/v1/lpl-task/MatchSign'
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "Cookie": cookie
+    }
+    data = {
+        'room_id': '7734200',
+        'game_type': 26,
+        'csrf_token': csrf,
+        'csrf': csrf,
+        'visit_id': '4sb6nhezljw0'
+    }
+    response = await request.req_add_job('post', url, headers=headers, data=data, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"签到回显:{response}", "INFO", "blue")
+
+
+# 76号直播间转发
+async def OWShare(cookie, csrf, suname):
+    url = 'https://api.live.bilibili.com/xlive/general-interface/v1/lpl-task/MatchShare'
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "Cookie": cookie
+    }
+    data = {
+        'game_type': 26,
+        'csrf_token': csrf,
+        'csrf': csrf,
+        'visit_id': '4sb6nhezljw0'
+    }
+    response = await request.req_add_job('post', url, headers=headers, data=data, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"分享回显:{response}", "INFO", "blue")
 

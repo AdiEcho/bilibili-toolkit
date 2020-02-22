@@ -29,8 +29,8 @@ enable = false
 
 # 关注
 [follow]
-enable = true
-uid_list = [5212665]
+enable = false
+uid_list = [5212665, 28922133]
 
 # 清空没关注自己的up
 [clean_not_follow_up]
@@ -145,7 +145,7 @@ aid = 85794878
 
 # 6号直播间签到分享
 [Six]
-enable = true
+enable = false
 
 # 漫画测试
 [MangaSign]
@@ -158,5 +158,9 @@ fan_uid = 198833019
 
 # 天选
 [tianxuan]
+enable = false
+
+# 测试ip，无法成功，待废弃
+[test_ip]
 enable = false
 

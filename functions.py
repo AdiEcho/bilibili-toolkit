@@ -209,6 +209,8 @@ async def watch_video_heartbeat_run(aid, uid, cookie, csrf, suname):
 async def Six_run(cookie, csrf, suname):
     await SixSign(cookie, csrf, suname)
     await SixShare(cookie, csrf, suname)
+    await OWSign(cookie, csrf, suname)
+    await OWShare(cookie, csrf, suname)
 
 
 async def MangaSign_run(cookie, suname):
@@ -217,3 +219,7 @@ async def MangaSign_run(cookie, suname):
 
 async def tianxuan_run(cookie, csrf, suname):
     await tianxuan(cookie, csrf, suname)
+
+
+async def test_ip_run(suname):
+    await test_ip(suname)

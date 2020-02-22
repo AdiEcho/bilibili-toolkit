@@ -23,7 +23,7 @@ def generate_verify_token():
 
 class Request:
     def __init__(self):
-        self.proxy_api = "http://gec.ip3366.net/api/?key=20190728141000080&getnum=100&proxytype=0"
+        self.proxy_api = "http://route.xiongmaodaili.com/xiongmao-web/api/glip?secret=f9f46ca734216b149dac9cd49d5ee5f9&orderNo=GL20200212232653LJto2Fa5&count=1&isTxt=1&proxyType=1"
         # 全局session
         self.ssion = {}
         # 工作队列
@@ -43,6 +43,7 @@ class Request:
                 if flag < 0 or proxy:
                     temp = await self.other_get(self.proxy_api)
                     proxy = f'http://{temp}'
+
                 else:
                     proxy = None
                 async with getattr(self.ssion[suname], method)(
@@ -141,4 +142,3 @@ class Request:
 
             except Exception as e:
                 printer.printer(f"req_loop {e}", "Error", "red")
-

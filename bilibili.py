@@ -83,7 +83,7 @@ class Main:
         if config['make_fake_userinfo']['enable']:
             await make_fake_info_run(uid, cookie, csrf, uname)
         if config['random_follow']['enable']:
-            await random_follow_run(uid, cookie, csrf, suname)
+            await random_follow_run(uid, cookie, csrf, uname)
         if config['level_task']['enable']:
             await level_task_run(uid, access_token, cookie, csrf, uname)
         if config['combo']['enable']:
@@ -164,6 +164,8 @@ class Main:
             await delete_fans_run(fan_uid, cookie, csrf, uname)
         if config['tianxuan']['enable']:
             await tianxuan_run(cookie, csrf, uname)
+        if config['test_ip']['enable']:
+            await test_ip_run(uname)
 
         if config['comment_send']['enable']:
             if len(self.msgs) > 0:

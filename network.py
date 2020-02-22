@@ -4,6 +4,7 @@
 # @Author  : Dawnnnnnn
 # @Contact: 1050596704@qq.com
 import asyncio
+import os
 import random
 import time
 import traceback
@@ -132,6 +133,7 @@ class Request:
                 if self.req_work_list:
                     # 在此修改每个任务之间的间隔时间
                     await asyncio.sleep(random.randint(1, 15))
+                    os.system('/sbin/ifdown ppp0 && sleep 1s && /sbin/ifup ppp0')
                     is_alive_time = int(time.time())
                     req_pack = self.req_work_list.pop(0)
                     target = req_pack['func']

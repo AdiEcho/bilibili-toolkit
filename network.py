@@ -126,6 +126,8 @@ class Request:
                 # 理论数据 不排除其他协程调度的消耗 可能会堵塞
                 # await asyncio.sleep(0.6)
                 await asyncio.sleep(1 / self.req_alive_num)
+                # linux拨号秒换使用以下代码换ip
+                os.system('/sbin/ifdown ppp0 && sleep 1s && /sbin/ifup ppp0')
                 # 退出当前协程
                 if int(time.time()) - is_alive_time > self.req_timeout_max:
                     printer.printer("最大超时时间内没有请求处理,请求协程退出!", "Finished", "green")
@@ -133,7 +135,6 @@ class Request:
                 if self.req_work_list:
                     # 在此修改每个任务之间的间隔时间
                     await asyncio.sleep(random.randint(1, 15))
-                    os.system('/sbin/ifdown ppp0 && sleep 1s && /sbin/ifup ppp0')
                     is_alive_time = int(time.time())
                     req_pack = self.req_work_list.pop(0)
                     target = req_pack['func']

@@ -90,6 +90,10 @@ async def follow_run(follow_uid, cookie, csrf, suname):
     await follow(follow_uid, cookie, csrf, suname)
 
 
+async def unfollow_run(unfollow_uid, cookie, csrf, suname):
+    await unfollow(unfollow_uid, cookie, csrf, suname)
+
+
 async def level_task_run(uid, access_key, cookie, csrf, suname):
     await watch_av_random(uid, csrf, cookie, suname)
     await share_random(cookie, access_key, suname)
@@ -120,9 +124,9 @@ async def make_fake_info_run(uid, cookie, csrf, suname):
         random_num = random.randint(1, 20)
         if random_num > 10:
             await follow(response['data'][i]['uid'], cookie, csrf, suname)
+
+
 # 随机关注
-
-
 async def random_follow_run(uid, cookie, csrf, suname):
     response = await get_follow_uid_list(suname)
     for i in range(0, len(response['data'])):

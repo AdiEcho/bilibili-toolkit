@@ -96,6 +96,10 @@ class Main:
             uid_list = config['follow']['uid_list']
             for uid in uid_list:
                 await follow_run(uid, cookie, csrf, uname)
+        if config['unfollow']['enable']:
+            uid_list = config['unfollow']['uid_list']
+            for uid in uid_list:
+                await unfollow_run(uid, cookie, csrf, uname)
         if config['clean_not_follow_up']['enable']:
             await clean_not_follow_up_run(uid, cookie, csrf, uname)
         if config['clean_not_follow_fan']['enable']:

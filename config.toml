@@ -29,8 +29,13 @@ enable = false
 
 # 关注
 [follow]
-enable = false
-uid_list = [5212665, 28922133]
+enable = true
+uid_list = [5212665, 23743847, 8633898, 13754582]
+
+# 取消关注
+[unfollow]
+enable = true
+uid_list = [513753189]
 
 # 清空没关注自己的up
 [clean_not_follow_up]

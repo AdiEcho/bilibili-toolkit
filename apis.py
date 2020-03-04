@@ -15,15 +15,25 @@ from utils import *
 request = Request()
 
 
-# 测试ip
-async def test_ip(suname):
-    url = 'http://icanhazip.com/'
+# 关注（直播站接口）
+async def follow_(uid, follow_uid, cookie, csrf, suname):
+    url = "https://api.live.bilibili.com/relation/v1/Feed/SetUserFollow"
+    data = {
+        'uid': uid,
+        "type": 1,
+        "follow": follow_uid,
+        "re_src": "18",
+        "csrf_token": csrf,
+        "csrf": csrf,
+        'visit_id': ''
+    }
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36",
+        "Cookie": cookie
     }
-    response = await request.req_add_job('get', url, headers=headers, suname=suname)
-    response = response.text()
-    printer.printer(f"{response}", 'INFO', 'blue')
+    response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
+    response = json.loads(response)
+    printer.printer(f"取消关注{follow_uid}回显:{response}", "INFO", "blue")
 
 
 # 取消关注 (直播站接口)
@@ -320,7 +330,7 @@ async def delete_not_exchange_fans(uid, cookie, csrf, suname):
 
 # 删除没有互粉的关注人
 async def delete_not_exchange_follows(cookie, csrf, suname):
-    follows = await get_all_follows_not_6(cookie, suname)
+    follows = await get_all_follows_not_6(cookie, suname, suname)
     for follow_uid in follows:
         await delete_follow(follow_uid, cookie, csrf, suname)
 

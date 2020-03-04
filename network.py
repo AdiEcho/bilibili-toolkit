@@ -134,7 +134,7 @@ class Request:
                     return
                 if self.req_work_list:
                     # 在此修改每个任务之间的间隔时间
-                    await asyncio.sleep(random.randint(1, 15))
+                    # await asyncio.sleep(random.randint(3, 5))
                     is_alive_time = int(time.time())
                     req_pack = self.req_work_list.pop(0)
                     target = req_pack['func']

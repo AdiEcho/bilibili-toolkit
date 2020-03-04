@@ -225,5 +225,9 @@ async def tianxuan_run(cookie, csrf, suname):
     await tianxuan(cookie, csrf, suname)
 
 
-async def test_ip_run(suname):
-    await test_ip(suname)
+async def follow_run_(uid, follow_uid, cookie, csrf, suname):
+    await follow_(uid, follow_uid, cookie, csrf, suname)
+
+
+async def delete_follow_run(follow_uid, cookie, csrf, suname):
+    await delete_follow(follow_uid, cookie, csrf, suname)

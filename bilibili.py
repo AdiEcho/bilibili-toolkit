@@ -168,8 +168,14 @@ class Main:
             await delete_fans_run(fan_uid, cookie, csrf, uname)
         if config['tianxuan']['enable']:
             await tianxuan_run(cookie, csrf, uname)
-        if config['test_ip']['enable']:
-            await test_ip_run(uname)
+        if config['follow_']['enable']:
+            uid_list = config['follow_']['uid_list']
+            for follow_uid in uid_list:
+                await follow_run_(uid, follow_uid, cookie, csrf, uname)
+        if config['delete_follow']['enable']:
+            uid_list = config['delete_follow']['uid_list']
+            for delete_follow_uid in uid_list:
+                await follow_run_(uid, delete_follow_uid, cookie, csrf, uname)
 
         if config['comment_send']['enable']:
             if len(self.msgs) > 0:

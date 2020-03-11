@@ -4,13 +4,13 @@ enable = false # 开关
 
 # 关注（直播站接口）
 [follow_]
-enable = true
-uid_list = []
+enable = false
+uid_list = [99265555]
 
 # 取消关注（直播站接口）
 [delete_follow]
-enable = true
-uid_list = []
+enable = false
+uid_list = [8429322]
 
 # 清空账号资产/信息
 [destory_account]
@@ -39,7 +39,7 @@ enable = false
 
 # 关注
 [follow]
-enable = true
+enable = false
 uid_list = [513753189]
 
 # 取消关注

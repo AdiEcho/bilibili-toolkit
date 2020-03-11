@@ -175,7 +175,7 @@ class Main:
         if config['delete_follow']['enable']:
             uid_list = config['delete_follow']['uid_list']
             for delete_follow_uid in uid_list:
-                await follow_run_(uid, delete_follow_uid, cookie, csrf, uname)
+                await delete_follow_run(delete_follow_uid, cookie, csrf, uname)
 
         if config['comment_send']['enable']:
             if len(self.msgs) > 0:

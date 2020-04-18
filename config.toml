@@ -5,12 +5,12 @@ enable = false # 开关
 # 关注（直播站接口）
 [follow_]
 enable = false
-uid_list = [99265555]
+uid_list = [472352442]
 
 # 取消关注（直播站接口）
 [delete_follow]
 enable = false
-uid_list = [8429322]
+uid_list = [143821933]
 
 # 清空账号资产/信息
 [destory_account]

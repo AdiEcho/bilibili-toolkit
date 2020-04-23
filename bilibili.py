@@ -167,7 +167,8 @@ class Main:
             fan_uid = config['delete_fans']['fan_uid']
             await delete_fans_run(fan_uid, cookie, csrf, uname)
         if config['tianxuan']['enable']:
-            await tianxuan_run(cookie, csrf, uname)
+            id_ = config['tianxuan']['id']
+            await tianxuan_run(id_, cookie, csrf, uname)
         if config['follow_']['enable']:
             uid_list = config['follow_']['uid_list']
             for follow_uid in uid_list:

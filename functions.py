@@ -221,8 +221,8 @@ async def MangaSign_run(cookie, suname):
     await MangaSign(cookie, suname)
 
 
-async def tianxuan_run(cookie, csrf, suname):
-    await tianxuan(cookie, csrf, suname)
+async def tianxuan_run(id_, cookie, csrf, suname):
+    await tianxuan(id_, cookie, csrf, suname)
 
 
 async def follow_run_(uid, follow_uid, cookie, csrf, suname):

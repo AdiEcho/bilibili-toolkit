@@ -6,9 +6,7 @@
 import json
 import random
 from io import BytesIO
-
 from PIL import Image
-
 from network import Request
 from utils import *
 
@@ -34,6 +32,8 @@ async def follow_(uid, follow_uid, cookie, csrf, suname):
     response = await request.req_add_job('post', url, data=data, headers=headers, suname=suname)
     response = json.loads(response)
     printer.printer(f"关注{follow_uid}回显:{response}", "INFO", "cyan")
+    if response['code'] == 401:
+        delete_data('cookies.txt', cookie)
 
 
 # 取消关注 (直播站接口)
@@ -1180,7 +1180,7 @@ async def MangaSign(cookie, suname):
     printer.printer(f"漫画签到回显:{response}", "INFO", "blue")
 
 
-async def tianxuan(cookie, csrf, suname):
+async def tianxuan(id_, cookie, csrf, suname):
     url = 'https://api.live.bilibili.com/xlive/lottery-interface/v1/Anchor/Join'
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
@@ -1188,7 +1188,7 @@ async def tianxuan(cookie, csrf, suname):
         "Cookie": cookie
     }
     data = {
-        'id': '97287',
+        'id': id_,
         'platform': 'pc',
         'csrf_token': csrf,
         'csrf': csrf,

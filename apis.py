@@ -9,7 +9,9 @@ from io import BytesIO
 from PIL import Image
 from network import Request
 from utils import *
+from fake_useragent import UserAgent
 
+ua = UserAgent()
 request = Request()
 
 
@@ -1180,15 +1182,15 @@ async def MangaSign(cookie, suname):
     printer.printer(f"漫画签到回显:{response}", "INFO", "blue")
 
 
-async def tianxuan(id_, cookie, csrf, suname):
+async def tianxuan(join_id, cookie, csrf, suname):
     url = 'https://api.live.bilibili.com/xlive/lottery-interface/v1/Anchor/Join'
     headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "User-Agent": ua.chrome,
         'Content-Length': '124',
         "Cookie": cookie
     }
     data = {
-        'id': id_,
+        'id': join_id,
         'platform': 'pc',
         'csrf_token': csrf,
         'csrf': csrf,

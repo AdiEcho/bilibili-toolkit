@@ -9,8 +9,8 @@ uid_list = [472352442]
 
 # 取消关注（直播站接口）
 [delete_follow]
-enable = false
-uid_list = [143821933]
+enable = true
+uid_list = [2644956]
 
 # 清空账号资产/信息
 [destory_account]
